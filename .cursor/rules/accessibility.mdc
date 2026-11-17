@@ -1,0 +1,19 @@
+---
+description: Accessibility requirements for Velora Monitor interface code
+globs: apps/web/src/**/*.vue, apps/web/src/**/*.ts, apps/web/e2e/**/*.ts
+alwaysApply: false
+---
+
+# Accessibility
+
+Use the HTML element that already has the behavior, then add ARIA only when the semantics are still missing.
+
+- Label every control. Keep heading levels in order. Give images a meaningful `alt`, or an empty `alt` when the image is decorative.
+- Reach every action from the keyboard. Keep a visible `:focus-visible` ring. Move focus into a dialog and back to the trigger.
+- Announce loading, empty, and error states in text, not by color alone. A status color is paired with a word.
+- Meet the contrast ratios in `docs/design/color-system.md`. Violet text on charcoal fails body-text contrast.
+- Keep a hit target at least 24px. The current default button is 36px tall. A phone primary action can use the `lg` size or padding to reach about 44px. Do not resize every primitive in an unrelated change.
+- Reduced motion, from the motion rule, is part of the accessible interface.
+- Playwright coverage for a new interaction includes a keyboard path when the flow is user-facing.
+
+Check the work. A component that looks right and fails the keyboard is unfinished. Detail is in `docs/quality/accessibility.md`.

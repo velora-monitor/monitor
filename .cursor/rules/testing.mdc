@@ -1,0 +1,19 @@
+---
+description: Testing gates and the kinds of tests Velora Monitor requires
+globs: "**/*.test.ts, **/*.spec.ts, apps/worker/**/*_test.go, apps/web/e2e/**/*.ts, apps/web/playwright.config.ts, apps/api/vitest.config.ts, apps/web/vitest.config.ts"
+alwaysApply: false
+---
+
+# Testing
+
+The CI gate is `pnpm exec turbo run lint typecheck test build`, Playwright smoke, gofmt, `go vet`, staticcheck, and `go test ./...`. A change keeps the part of that gate it can affect green.
+
+- Test behavior through a public function, route, or screen. Skip tests that only restate a mock.
+- Cover authorization, a second owner's denial, validation failure, and the incident transition the change touches.
+- Keep tests isolated. A test creates its fixture and does not depend on order.
+- Name the condition and the expected outcome.
+- Web unit tests run in Vitest's Node environment. Browser flows use Playwright in `apps/web/e2e`.
+- Worker tests use the Go testing package and the in-memory store where the database is optional.
+- Leave coverage theater out. Add a test because a failure would ship bad monitoring, auth, or tenant data.
+
+Use the `testing-workflow` skill to choose and run the suite. Standards are in `docs/engineering/testing-standards.md`.

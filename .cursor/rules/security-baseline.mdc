@@ -1,0 +1,20 @@
+---
+description: Security constraints that apply to every Velora Monitor change
+alwaysApply: true
+---
+
+# Security baseline
+
+Treat user-controlled input and any content fetched from a monitored URL as untrusted.
+
+- Authorize on the server. The browser cannot set a role, an owner, a price, or a payment result.
+- Scope every read and write to the authenticated `owner_id`. A hidden row is not an authorization check.
+- Keep privileged credentials on the server. `DATABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, and `SENTRY_DSN` stay out of `VITE_` variables and the web bundle.
+- Validate at the boundary with the shared Zod contracts or a server schema. Query Postgres with bound parameters.
+- Encode output for the context that receives it. Render text, not unsanitized HTML.
+- Verify a webhook signature before changing state. No billing surface exists. A future payment flow accepts provider evidence only.
+- Keep secrets, `.env` files, and production source maps out of Git.
+- Rate-limit authentication and public API entry points. The API already limits requests by client IP.
+- An outbound check must be unable to reach loopback, link-local, or private addresses. The HTTP checker does not enforce that policy yet. Keep `PROBE_MODE=http` off for untrusted URLs until it does.
+
+Layer detail is in `docs/security/security-standards.md`. Review work with the `security-audit` skill.

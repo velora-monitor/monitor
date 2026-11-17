@@ -1,0 +1,26 @@
+---
+description: Repository map, toolchain, and change boundaries for Velora Monitor
+alwaysApply: true
+---
+
+# Architecture
+
+Velora Monitor is a pnpm and Turborepo monorepo. Use the stack that is already here.
+
+- `apps/web` is Vue 3, Vite, Vue Router, Pinia, TanStack Query, Tailwind CSS 4, and shadcn-vue on Reka UI.
+- `apps/api` is Hono. Zod contracts live in `@velora/contracts`. Data access uses Drizzle. Authentication uses Supabase Auth.
+- `apps/worker` is the Go checker and incident transition engine. The module path is `velora/apps/worker`.
+- `packages/config` holds the TypeScript, Oxlint, and Oxfmt presets.
+- `supabase/migrations` is the schema source. `apps/api/src/db/schema.ts` must match the latest migration.
+
+Runtime pins: Node `>=26.13.1`, pnpm `12.18.0`, Go `1.27.4`. Lint TypeScript and Vue with Oxlint and deny warnings. Format those files with Oxfmt. Format Go with gofmt. Test with Vitest, Playwright, and `go test`. Typecheck with `vue-tsc` or `tsc --noEmit`, and check the worker with `go vet` and staticcheck.
+
+The ownership boundary is the authenticated user, `monitors.owner_id`. There is no organization table. A privileged database connection bypasses row-level security, so worker and server writes still name the monitor they loaded.
+
+`PROBE_MODE` defaults to `off`. Leave live URL probes off unless the task is the probe itself.
+
+Leave `dist/`, `.turbo/`, and `pnpm-lock.yaml` to their tools. Change the lockfile only by running pnpm.
+
+Constraints live in `.cursor/rules/`. Workflows live in `.cursor/skills/`. References live in `docs/`. Read the document for the layer you are changing. Gaps are recorded in `docs/engineering/instruction-system.md`.
+
+TypeScript and Go production code does not use comments.

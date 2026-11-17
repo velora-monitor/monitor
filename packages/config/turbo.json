@@ -1,0 +1,42 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "typecheck": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../oxlint.config.ts",
+        "../../oxfmt.config.ts",
+        "../../tsconfig.json"
+      ]
+    },
+    "lint": {
+      "inputs": ["$TURBO_DEFAULT$", "../../oxlint.config.ts", "../../oxfmt.config.ts"]
+    },
+    "format": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../package.json",
+        "../../turbo.json",
+        "../../pnpm-workspace.yaml",
+        "../../lefthook.yml",
+        "../../oxlint.config.ts",
+        "../../oxfmt.config.ts",
+        "../../README.md",
+        "../../tsconfig.json"
+      ]
+    },
+    "format:check": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "../../package.json",
+        "../../turbo.json",
+        "../../pnpm-workspace.yaml",
+        "../../lefthook.yml",
+        "../../oxlint.config.ts",
+        "../../oxfmt.config.ts",
+        "../../README.md",
+        "../../tsconfig.json"
+      ]
+    }
+  }
+}

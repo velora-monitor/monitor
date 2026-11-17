@@ -1,0 +1,26 @@
+{
+  "name": "@velora/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./typescript/base.json": "./typescript/base.json",
+    "./typescript/node.json": "./typescript/node.json",
+    "./typescript/vue.json": "./typescript/vue.json",
+    "./typescript/library.json": "./typescript/library.json",
+    "./oxlint/oxlintrc.json": "./oxlint/oxlintrc.json",
+    "./oxfmt": "./oxfmt/oxfmt.config.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p ../../tsconfig.json --noEmit",
+    "lint": "cd ../.. && oxlint --deny-warnings packages/config oxlint.config.ts oxfmt.config.ts",
+    "format": "cd ../.. && oxfmt packages/config package.json turbo.json pnpm-workspace.yaml lefthook.yml oxlint.config.ts oxfmt.config.ts README.md tsconfig.json",
+    "format:check": "cd ../.. && oxfmt --check packages/config package.json turbo.json pnpm-workspace.yaml lefthook.yml oxlint.config.ts oxfmt.config.ts README.md tsconfig.json"
+  },
+  "devDependencies": {
+    "oxfmt": "catalog:",
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "typescript": "catalog:"
+  }
+}

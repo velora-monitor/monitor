@@ -1,0 +1,19 @@
+---
+description: Motion constraints for Velora Monitor interface transitions
+globs: apps/web/**/*.vue, apps/web/**/*.css
+alwaysApply: false
+---
+
+# Motion
+
+Motion explains state, origin, or feedback. A transition that only decorates the screen does not ship.
+
+- Enter with ease-out over about 200ms. Exit about 20% shorter, 160ms.
+- Menus and dropdowns use 150–250ms. Popovers begin near scale 0.95 and move from the trigger back toward the trigger.
+- Pressed controls scale to about 0.97. A moving knob may stretch about 12%.
+- Stagger related rows by about 30ms. Shared elements reuse one layout id.
+- Everyday UI does not bounce. Held elements are not continuously tweened.
+- Animate `transform` and `opacity`. Avoid layout-affecting properties on large lists and charts.
+- Honor `prefers-reduced-motion` by cutting the transition to instant.
+
+Tokens and the full motion notes are in `docs/design/tokens.css` and `docs/design/motion-guidelines.md`.

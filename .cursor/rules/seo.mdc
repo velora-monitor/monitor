@@ -1,0 +1,19 @@
+---
+description: Public metadata, indexing, and canonical URL requirements for Velora Monitor
+alwaysApply: false
+---
+
+# SEO and indexing
+
+Use this when changing public pages, document head metadata, sitemaps, or indexing.
+
+The authenticated dashboard stays out of search indexes. `noindex` those routes and leave them out of `sitemap.xml`.
+
+- Each public URL has one title and one meta description.
+- Canonical URLs use the production origin the owner has confirmed. Do not invent a domain.
+- Open Graph and Twitter card metadata point at a real social image.
+- Structured data describes only content the page actually shows.
+- `robots.txt`, `sitemap.xml`, and `llms.txt` are required for the public site and absent today.
+- The heading outline has one `h1`. Internal links use real routes.
+
+Detail is in `docs/quality/seo.md`. Audit with the `seo-audit` skill.

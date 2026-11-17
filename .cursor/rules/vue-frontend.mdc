@@ -1,0 +1,20 @@
+---
+description: Vue application structure, data loading, and component conventions
+globs: apps/web/**/*.vue, apps/web/**/*.ts, apps/web/**/*.css, apps/web/components.json
+alwaysApply: false
+---
+
+# Vue frontend
+
+`apps/web` is the only UI application. Build screens from Vue single-file components, the router in `src/router/index.ts`, Pinia stores, and TanStack Query.
+
+- Put reusable primitives in `src/components/ui/` using the existing shadcn-vue, Reka UI, and `class-variance-authority` pattern.
+- Put feature components beside the current dashboard components. Keep route screens in `src/views/`.
+- Call the API through `src/lib/api.ts` and the Hono client typed by `AppType`. Parse responses with `@velora/contracts`.
+- Read session state from `src/stores/session.ts`. The router guard is a convenience. The API still authorizes every request.
+- Style with Tailwind utilities and the semantic colors in `src/styles/globals.css`. Visual rules are in the design-system rule.
+- Import the `cn` helper from `cn`. Alias `@` to `src`.
+- Keep the QueryClient defaults unless the task is caching behavior: no refetch on window focus, and no automatic retry.
+- Register a new route on the existing shell. Authenticated routes stay out of public indexes.
+
+The live stylesheet still uses the stock shadcn neutral palette. Brand tokens are specified in `docs/design/tokens.css` and are not wired into the app yet.

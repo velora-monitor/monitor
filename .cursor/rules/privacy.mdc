@@ -1,0 +1,18 @@
+---
+description: Privacy and compliance review points for Velora Monitor product changes
+alwaysApply: false
+---
+
+# Privacy
+
+Use this when adding accounts, email, cookies, analytics, tracking, payments, or AI features that touch personal data.
+
+No privacy policy, terms, cookie banner, or marketing list exists in the repository. Do not mark those present. Legal requirements are confirmed by the owner or counsel. This rule lists engineering questions, not a legal opinion.
+
+- Collect the data the feature needs and document where it is stored.
+- Marketing email requires an opt-in that is stored, and a working unsubscribe, before any campaign send.
+- Load tracking pixels and non-essential analytics after the consent the owner says is required.
+- Session tokens and recovery flows stay on the auth provider's secure cookie or the existing Supabase session. Do not copy them into logs.
+- AI output, if a feature is added later, is disclosed as generated where a person could mistake it for a measurement.
+
+The review list is in `docs/security/privacy.md`.

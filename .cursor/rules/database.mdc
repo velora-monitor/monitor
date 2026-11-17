@@ -1,0 +1,19 @@
+---
+description: Postgres schema, migration, and row-level security conventions
+globs: apps/api/src/db/**/*.ts, supabase/**/*.sql, apps/worker/internal/store/**/*.go
+alwaysApply: false
+---
+
+# Database
+
+`supabase/migrations` is the schema source. `apps/api/src/db/schema.ts` mirrors tables, checks, indexes, and policies. Change both in the same task. Add a new migration file. Leave an already applied migration untouched.
+
+- Enable and force row-level security on every application table.
+- A policy for `authenticated` compares `monitors.owner_id` with `auth.uid()`, or joins child rows back to that owner.
+- `authenticated` receives table grants that the policies then narrow. `service_role` is the privileged path.
+- The worker connects with `DATABASE_URL` through pgx and bypasses those policies. Scope its writes to the monitor id it loaded.
+- Store timestamps as `timestamptz`. Keep checks for non-empty names, positive intervals, and non-negative counters.
+- Keep the partial unique index `incidents_one_open_per_monitor_idx`.
+- Query with Drizzle or pgx parameters. A query that can return an unbounded history has a limit.
+
+There is no organization tenant. Detail is in `docs/security/tenant-isolation.md`. Use the `database-development` skill for schema work.

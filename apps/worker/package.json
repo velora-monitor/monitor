@@ -1,0 +1,13 @@
+{
+  "name": "@velora/worker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "go run ./cmd/worker",
+    "start": "if [ -f dist/worker ]; then exec ./dist/worker; else exec go run ./cmd/worker; fi",
+    "build": "go build -o dist/worker ./cmd/worker",
+    "test": "go test ./...",
+    "lint": "files=$(gofmt -l .); if [ -n \"$files\" ]; then printf '%s\\n' \"$files\"; exit 1; fi; go vet ./... && go tool staticcheck ./...",
+    "typecheck": "go vet ./..."
+  }
+}

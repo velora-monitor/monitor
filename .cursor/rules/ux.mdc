@@ -1,0 +1,19 @@
+---
+description: Interaction feedback and state communication for Velora Monitor screens
+globs: apps/web/src/**/*.vue, apps/web/e2e/**/*.ts
+alwaysApply: false
+---
+
+# Interaction
+
+Each meaningful action ends in a visible result: success, failure, loading, or an empty explanation.
+
+- Show a skeleton while a list or chart is loading, and keep the layout stable when data arrives.
+- Confirm destructive actions. Offer undo only when the action can actually be reversed.
+- Optimistic UI is allowed for reversible presentation. Authentication, ownership, incident state, and any future billing action wait for the server.
+- Empty screens say what is missing and what the user can do next. Use the existing `Empty` primitives.
+- Put the most frequent action where it is easiest to reach. Keep a choice set small.
+- Loading feedback appears within a fraction of a second. A control stays disabled only while its own request is in flight.
+- Forms show the validation message next to the field.
+
+Choose patterns for the interaction in front of you. The catalog in `docs/design/ux-guidelines.md` is a menu, not a checklist to implement all at once.

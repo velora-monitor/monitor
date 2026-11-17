@@ -1,0 +1,21 @@
+---
+description: Brand color, typography, and visual exclusions for Velora Monitor UI
+globs: apps/web/**/*.vue, apps/web/**/*.css, apps/web/components.json
+alwaysApply: false
+---
+
+# Design system
+
+The brand anchors are exact and live in `docs/design/tokens.css`.
+
+- Deep Charcoal `#18181C`, `oklch(21.08% 0.00782 285.71)`, is the application background.
+- Electric Violet `#723BFA`, `oklch(54.43% 0.25945 287.45)`, is the primary action and selection color.
+- Acid Lime `#B9F500`, `oklch(89.60% 0.22671 125.54)`, marks success and uptime, and it stays scarce.
+
+Use semantic tokens. Keep new hex and `oklch()` values out of components. Violet on charcoal is 3.14:1, so violet is a fill, a selection, or a focus ring, not small text. Primary button labels use the light foreground token. Lime is a status color, not the default button.
+
+Structure pages with type, spacing, and alignment. The Tailwind spacing scale and the existing `--radius: 0.625rem` are the geometry. Metrics use `tabular-nums`. Headings have no trailing period, no negative tracking, and no all-caps treatment.
+
+Leave these out: decorative pills, eyebrows, serif display type, gradient page backgrounds, dithering, ASCII art, squircles, extra borders around every region, and monospace used as decoration.
+
+Apply `docs/design/tokens.css` only when the task is the visual system. Copy the semantic values into `globals.css` and keep the three brand `oklch()` arguments unchanged. A component task uses whatever semantic classes already exist.

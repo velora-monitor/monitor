@@ -1,0 +1,20 @@
+---
+description: Monitoring state, measurement, and uptime integrity rules
+globs: apps/worker/**/*.go, packages/contracts/src/**/*.ts, apps/api/src/db/**/*.ts, apps/web/src/queries/**/*.ts, apps/web/src/fixtures/**/*.ts, apps/web/src/components/monitor-list.vue, apps/web/src/components/incident-list.vue, apps/web/src/components/latency-chart.vue, apps/web/src/components/health-card.vue, apps/web/src/views/dashboard-view.vue, apps/web/src/views/monitors-view.vue, apps/web/src/views/incidents-view.vue
+alwaysApply: false
+---
+
+# Observability domain
+
+Persisted check status is `up` or `down`. Persisted incident state is `open` or `resolved`. Health database state is `unconfigured`, `up`, or `down`. Keep those strings aligned in SQL, Zod, and Go.
+
+User-facing status uses a separate display vocabulary: Operational, Degraded, Unavailable, Unknown, Pending, and Recovering. Map into it explicitly. Missing, failed, or unconfigured data displays as Unknown or Pending. It never displays as Operational. Recovering has no persisted column today. Do not invent one during unrelated work.
+
+- Store event time in UTC (`timestamptz`) and format it in the viewer's zone at the edge.
+- A failed measurement stays failed. Do not coerce a `down` result, a timeout, or a gap into `up`.
+- Uptime math defines its window and excludes unknown gaps. A missing sample is not success.
+- Incident duration uses `opened_at` and `resolved_at`. An open incident has a null `resolved_at`.
+- Charts label what was measured. A fixture or an empty series is labeled as such.
+- The state machine stays in `incident.Apply`. Duplicate open incidents stay impossible.
+
+The display mapping is specified in `docs/product/observability-domain.md` and still needs owner confirmation before any schema enum changes. Review logic with the `observability-domain-review` skill.

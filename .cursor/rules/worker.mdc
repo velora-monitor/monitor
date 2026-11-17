@@ -1,0 +1,19 @@
+---
+description: Go worker conventions for checks, scheduling, and incident transitions
+globs: apps/worker/**/*.go
+alwaysApply: false
+---
+
+# Worker
+
+The worker is a Go module. Format with gofmt, vet with `go vet`, and lint with `go tool staticcheck`. Tests are `go test ./...`. gofmt uses tabs even though `.editorconfig` sets spaces for every file. Leave Go indentation to gofmt.
+
+- `PROBE_MODE` is `off`, `fixture`, or `http`. The default is `off`.
+- A check result status is `up` or `down`. Transport failure and non-success HTTP status become `down`. Context cancellation returns an error and writes nothing.
+- HTTP checks do not follow redirects. The current code treats 2xx and 3xx as `up`. Leave that classification in place unless the task is probe semantics. The body read is capped.
+- Incident transitions pass through `incident.Apply` and `planCheck`. Actions stay `none`, `open`, `attach`, and `resolve`. Incident states stay `open` and `resolved`.
+- One monitor has one open incident. The database unique index is the backstop.
+- The worker uses the privileged database connection. It writes the monitor it was given and does not accept an owner id from outside that row.
+- Outbound HTTP still needs a private-network deny policy before `http` mode is used on untrusted URLs.
+
+Domain rules are in the observability rule and `docs/product/monitoring-integrity.md`.

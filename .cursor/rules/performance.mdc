@@ -1,0 +1,19 @@
+---
+description: Performance constraints for rendering, data fetching, bundles, and queries
+alwaysApply: false
+---
+
+# Performance
+
+Use this when a screen, query, bundle, chart, or worker loop is slow, or when adding one of those paths.
+
+Measure before changing structure. A timing guess is not a reason to add a cache.
+
+- Keep TanStack Query keys stable. The current client does not refetch on focus and does not retry. A realtime tick updates the query that owns the data, not the whole tree.
+- Paginate or limit monitor history. Chart.js receives the series it draws, not an unbounded row dump.
+- Code-split a route that pulls a heavy library. The latency chart can load with the view that uses it.
+- Optimize images before they ship. Prefer dimensions that do not shift the layout.
+- Index filters the API already uses: owner id, monitor plus time, and incident state.
+- The worker pool has a configured size. Do not spawn an unbounded goroutine per monitor.
+
+Standards are in `docs/engineering/performance.md`. Investigate with the `performance-audit` skill.

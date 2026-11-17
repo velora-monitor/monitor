@@ -1,0 +1,18 @@
+---
+description: Responsive layout constraints for Velora Monitor screens
+globs: apps/web/**/*.vue, apps/web/**/*.css
+alwaysApply: false
+---
+
+# Responsive layout
+
+Every screen works at a narrow phone width, a tablet width, and a desktop width.
+
+- The page itself does not scroll sideways. A wide table or chart scrolls inside its own region.
+- Navigation collapses on small screens. The product currently has a simple shell, so a new primary destination needs a small-screen path.
+- Respect safe-area insets on fixed bars and sheets.
+- Touch actions are available without hover. Tooltips repeat information that matters.
+- Type and charts reflow. A modal that fits a desktop viewport becomes a sheet when the viewport is short.
+- Verify at 320px and 768px, not only at the desktop default.
+
+Detail is in `docs/quality/responsive-design.md`.

@@ -1,0 +1,18 @@
+---
+description: Public website quality bar for pages, navigation, metadata, and production build output
+alwaysApply: false
+---
+
+# Website quality
+
+Use this when changing public pages, navigation, footer content, the document shell, or the production web build.
+
+- The logo returns home. Phone numbers use `tel:` and email addresses use `mailto:` when those contacts exist.
+- Internal links resolve. A custom 404 exists for unknown public routes. The visible copyright year is the current year.
+- Favicon, title, and meta description are present on public pages. The current document title is `Velora`.
+- Empty, loading, success, and error feedback exist on user-facing flows.
+- The production build does not ship a dev overlay, framework watermark, or public source map.
+- Images declare dimensions or a stable placeholder and include alt text.
+- There is no placeholder copy on a page that is presented as finished.
+
+The full audit list is in `docs/quality/website-quality.md`. Run the `website-quality-audit` skill before calling a public page done.

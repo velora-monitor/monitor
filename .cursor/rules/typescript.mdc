@@ -1,0 +1,24 @@
+---
+description: TypeScript conventions for Velora Monitor
+globs: "**/*.ts, **/*.vue"
+alwaysApply: false
+---
+
+# TypeScript
+
+Follow `packages/config/typescript/base.json`. Strictness stays on, including `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`.
+
+- Import and export with ESM syntax. API and contract source import local files with a `.js` suffix.
+- Put shared request and response shapes in `@velora/contracts` and infer types from Zod.
+- Reject `any`. Use `unknown` at a trust boundary and narrow it.
+- Handle rejected promises. Oxlint enforces `typescript/no-floating-promises`.
+- Leave comments out. Choose names that carry the constraint.
+- Keep formatting to Oxfmt and lint to Oxlint. Do not add ESLint or Prettier.
+- Add a dependency only when the existing stack cannot do the job, and add it to the pnpm catalog when it is shared.
+
+```ts
+const row = rows[0];
+if (row === undefined) {
+  throw new Error("Expected a monitor row");
+}
+```

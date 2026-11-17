@@ -1,0 +1,28 @@
+{
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "import", "vue", "node"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error"
+  },
+  "env": {
+    "builtin": true
+  },
+  "ignorePatterns": ["**/node_modules/**", "**/dist/**", "**/coverage/**", "**/.turbo/**"],
+  "overrides": [
+    {
+      "files": ["**/*.vue"],
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      "files": ["**/*.ts"],
+      "env": {
+        "node": true
+      }
+    }
+  ],
+  "rules": {
+    "typescript/no-floating-promises": "error"
+  }
+}

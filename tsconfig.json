@@ -1,0 +1,12 @@
+{
+  "extends": "@velora/config/typescript/base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "types": [],
+    "rootDir": "."
+  },
+  "include": ["oxlint.config.ts", "oxfmt.config.ts"],
+  "exclude": ["apps", "packages", "node_modules", "dist"]
+}

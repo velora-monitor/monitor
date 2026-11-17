@@ -1,0 +1,24 @@
+---
+description: Hono API, contract, and authorization conventions
+globs: apps/api/**/*.ts, packages/contracts/**/*.ts
+alwaysApply: false
+---
+
+# API
+
+Public JSON shapes live in `@velora/contracts` and are built to `packages/contracts/dist` before the API or web typechecks against them.
+
+- Add a route on the Hono app in `apps/api/src/app.ts`. Authenticated routes hang off `v1Routes`, which already calls `requireUser`.
+- Read the user from `c.get("userId")`. Ignore any owner id sent in the body, query, or header.
+- Validate with `@hono/zod-validator` and `validationHook`. Return `apiError(status, code, message)` for failures.
+- Parse outgoing rows with the contract schema before `c.json`.
+- When `DATABASE_URL` is absent, the store is null and list routes return an empty array. Keep that boot path working.
+- Log with the existing Pino logger. Report unexpected exceptions through the Sentry client already attached to the app.
+- The web client is `hc<AppType>` in `apps/web/src/lib/api.ts`. A route change updates that client and its contract parse.
+
+```ts
+const rows = deps.store ? await deps.store.listMonitors(c.get("userId")) : [];
+return c.json(monitorSchema.array().parse(rows));
+```
+
+Security detail for this layer is in `docs/security/api-security.md`. Implement endpoints with the `api-development` skill.

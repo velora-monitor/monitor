@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26.13.1
+          cache: pnpm
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version: "1.27.4"
+          cache-dependency-path: apps/worker/go.sum
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint, typecheck, test, and build
+        run: pnpm exec turbo run lint typecheck test build
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @velora/web exec playwright install --with-deps chromium
+
+      - name: Playwright smoke
+        run: pnpm test:e2e
+
+      - name: Check Go formatting
+        working-directory: apps/worker
+        run: |
+          files=$(gofmt -l .)
+          if [ -n "$files" ]; then
+            printf '%s\n' "$files"
+            exit 1
+          fi
+
+      - name: Vet worker
+        working-directory: apps/worker
+        run: go vet ./...
+
+      - name: Staticcheck worker
+        working-directory: apps/worker
+        run: go tool staticcheck ./...
+
+      - name: Test worker
+        working-directory: apps/worker
+        env:
+          DATABASE_URL: ""
+        run: go test ./...
