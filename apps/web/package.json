@@ -15,7 +15,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@lucide/vue": "1.73.0",
+    "@lucide/vue": "1.77.0",
     "@supabase/supabase-js": "catalog:",
     "@tanstack/vue-query": "5.107.1",
     "@vee-validate/zod": "4.15.1",
