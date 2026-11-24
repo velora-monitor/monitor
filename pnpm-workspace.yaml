@@ -25,7 +25,7 @@ catalog:
   vitest: "5.1.0"
   vue-tsc: "3.3.14"
   tailwindcss: "4.3.5"
-  oxlint: "1.93.0"
+  oxlint: "1.94.0"
   oxfmt: "0.78.0"
   oxlint-tsgolint: "7.0.2007"
   hono: "4.13.18"
