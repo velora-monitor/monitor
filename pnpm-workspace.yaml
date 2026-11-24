@@ -27,7 +27,7 @@ catalog:
   tailwindcss: "4.3.5"
   oxlint: "1.93.0"
   oxfmt: "0.78.0"
-  oxlint-tsgolint: "7.0.2007"
+  oxlint-tsgolint: "7.0.2008"
   hono: "4.13.18"
   drizzle-orm: "0.45.4"
   "@supabase/supabase-js": "2.119.0"
